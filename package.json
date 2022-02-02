@@ -1,23 +1,24 @@
 {
-  "name": "glitch-hello-node",
+  "name": "wordbot",
   "version": "0.0.1",
-  "description": "A simple Node app built on fastify, instantly up and running. Built to be remixed on Glitch.com.",
-  "main": "server.js",
+  "description": "A Discord bot that plays word games!",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "fastify": "^3.27.0",
     "fastify-formbody": "^5.2.0",
     "fastify-static": "^4.5.0",
     "handlebars": "^4.7.7",
-    "point-of-view": "^5.0.0"
+    "point-of-view": "^5.0.0",
+    "discord.js": "^13.6.0"
   },
   "engines": {
     "node": "12.x"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/glitch-hello-node"
+    "url": "https://glitch.com/edit/#!/slime-outrageous-muskmelon"
   },
   "license": "MIT",
   "keywords": [
