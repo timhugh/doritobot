@@ -1,13 +1,26 @@
-const { Client, Intents } = require("discord.js");
+const { Client, Events, GatewayIntentBits } = require("discord.js");
+const commands = require("./commands");
 
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
-
-client.once("ready", () => {
-    console.log("Bot is ready");
+const client = new Client({
+    intents: [GatewayIntentBits.Guilds],
 });
 
-client.on("message", (message) => {
-    console.log("message received", message);
+client.once(Events.ClientReady, () => {
+    console.log(`Ready! Logged in as ${client.user.tag}`);
+});
+
+client.on(Events.InteractionCreate, async (interaction) => {
+    if (!interaction.isChatInputCommand()) return;
+
+    if (!commands.has(interaction.commandName)) {
+        console.warn("Got unknown command", interaction.commandName);
+        return;
+    }
+
+    const command = commands.get(interaction.commandName);
+    // TODO cooldown?
+    // TODO error handling?
+    await command.execute(interaction);
 });
 
 client.login(process.env.DISCORD_API_TOKEN);
