@@ -1,5 +1,6 @@
 const { Client, Events, GatewayIntentBits } = require("discord.js");
 const commands = require("./commands");
+const fastify = require("fastify");
 
 const client = new Client({
     intents: [GatewayIntentBits.Guilds],
@@ -24,3 +25,11 @@ client.on(Events.InteractionCreate, async (interaction) => {
 });
 
 client.login(process.env.DISCORD_API_TOKEN);
+
+const server = fastify({ logger: true });
+
+server.get("/health", async (_, res) => {
+    return { status: "OK" };
+});
+
+server.listen({ port: process.env.PORT });
