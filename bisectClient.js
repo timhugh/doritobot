@@ -24,4 +24,10 @@ const client = Object.freeze(
     new BisectClient(process.env.BISECT_API_URL, process.env.BISECT_API_TOKEN)
 );
 
-module.exports = client;
+const PowerState = {
+    Start: "start",
+    Stop: "stop",
+    Restart: "restart",
+};
+
+module.exports = { BisectClient: client, PowerState };

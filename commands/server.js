@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js");
-const BisectClient = require("../bisectClient");
+const { BisectClient, PowerState } = require("../bisectClient");
 
 const Status = {
     name: "status",
@@ -17,6 +17,20 @@ const Status = {
         await interaction.editReply(
             `Here you go! \`\`\`json\n${statusText}\`\`\``
         );
+    },
+};
+
+const Restart = {
+    name: "restart",
+    data: null,
+    async execute(interaction) {
+        await interaction.deferReply();
+        await BisectClient.setServerState(
+            process.env.BISECT_SERVER_ID,
+            PowerState.Restart
+        );
+        await interaction.editReply("Server is restarting!");
+        // TODO: poll for status and inform when running again
     },
 };
 
