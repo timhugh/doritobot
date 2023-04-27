@@ -22,7 +22,11 @@ const Status = {
 
 const Restart = {
     name: "restart",
-    data: null,
+    data: new SlashCommandBuilder()
+        .setName("restart")
+        .setDescription("Restart the game server")
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+        .setDMPermission(false),
     async execute(interaction) {
         await interaction.deferReply();
         await BisectClient.setServerState(
@@ -34,4 +38,4 @@ const Restart = {
     },
 };
 
-module.exports = { Status };
+module.exports = { Status, Restart };

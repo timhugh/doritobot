@@ -18,6 +18,12 @@ const BisectClient = class {
             .get(`servers/${serverID}/resources`)
             .then((res) => res.data);
     }
+
+    async setServerState(serverID, state) {
+        return this.#httpClient
+            .post(`servers/${serverID}/power`, { signal: state })
+            .then((res) => res.data);
+    }
 };
 
 const client = Object.freeze(
