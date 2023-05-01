@@ -1,6 +1,6 @@
 const { Client, Events, GatewayIntentBits } = require("discord.js");
 const fastify = require("fastify");
-const commands = require("./commands/allCommands");
+const commands = require("./commands/all");
 
 const client = new Client({
     intents: [GatewayIntentBits.Guilds],

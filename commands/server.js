@@ -1,4 +1,4 @@
-const { BisectClient, PowerState } = require("../BisectClient");
+const { BisectClient, PowerState } = require("../bisect");
 const { buildCommand } = require("../commands");
 
 const BasicStatus = buildCommand(
