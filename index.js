@@ -1,6 +1,6 @@
 const { Client, Events, GatewayIntentBits } = require("discord.js");
-const commands = require("./commands");
 const fastify = require("fastify");
+const commands = require("./commands/allCommands");
 
 const client = new Client({
     intents: [GatewayIntentBits.Guilds],
@@ -12,6 +12,7 @@ client.once(Events.ClientReady, () => {
 
 client.on(Events.InteractionCreate, async (interaction) => {
     if (!interaction.isChatInputCommand()) return;
+    console.log(interaction);
 
     if (!commands.has(interaction.commandName)) {
         console.warn("Got unknown command", interaction.commandName);

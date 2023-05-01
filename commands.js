@@ -1,6 +1,15 @@
-const ServerCommands = require("./commands/server");
+const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js");
 
-const commands = Object.values(ServerCommands);
-const commandDictionary = new Map(commands.map((c) => [c.name, c]));
+const buildCommand = (name, description, action) => {
+    return {
+        name: name,
+        data: new SlashCommandBuilder()
+            .setName(name)
+            .setDescription(description)
+            .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+            .setDMPermission(false),
+        execute: action,
+    };
+};
 
-module.exports = commandDictionary;
+module.exports = { buildCommand };

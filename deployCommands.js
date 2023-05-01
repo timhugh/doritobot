@@ -1,6 +1,6 @@
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
-const commands = require("./commands");
+const commands = require("./commands/allCommands");
 
 const rest = new REST({ version: "9" }).setToken(process.env.DISCORD_API_TOKEN);
 
@@ -14,11 +14,29 @@ const rest = new REST({ version: "9" }).setToken(process.env.DISCORD_API_TOKEN);
             data.push(c.data.toJSON());
         });
 
-        await rest.put(Routes.applicationCommands(process.env.DISCORD_APP_ID), {
-            body: data,
-        });
+        console.log("Clearing existing commands...");
+        await rest.put(
+            Routes.applicationGuildCommands(
+                process.env.DISCORD_APP_ID,
+                process.env.DISCORD_SERVER_ID
+            ),
+            {
+                body: [],
+            }
+        );
 
-        console.log("Finished registering commands.");
+        console.log("Deploying commands...");
+        await rest.put(
+            Routes.applicationGuildCommands(
+                process.env.DISCORD_APP_ID,
+                process.env.DISCORD_SERVER_ID
+            ),
+            {
+                body: data,
+            }
+        );
+
+        console.log("Done!");
     } catch (error) {
         console.error(error);
     }
