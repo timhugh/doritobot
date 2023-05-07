@@ -12,17 +12,28 @@ client.once(Events.ClientReady, () => {
 
 client.on(Events.InteractionCreate, async (interaction) => {
     if (!interaction.isChatInputCommand()) return;
-    console.log(interaction);
 
-    if (!commands.has(interaction.commandName)) {
+    const command = commands.get(interaction.commandName);
+    if (command === undefined) {
         console.warn("Got unknown command", interaction.commandName);
+        interaction.reply("Sorry, I don't know what that means!");
         return;
     }
 
-    const command = commands.get(interaction.commandName);
-    // TODO cooldown?
-    // TODO error handling?
-    await command.execute(interaction);
+    try {
+        console.log("Executing command", command.name);
+        await command.execute(interaction);
+    } catch (error) {
+        console.error(
+            "Encountered error while executing command",
+            interaction.commandName,
+            error
+        );
+    }
+});
+
+client.on(Events.ShardError, (error) => {
+    console.warn("Received shard error", error);
 });
 
 client.login(process.env.DISCORD_API_TOKEN);
